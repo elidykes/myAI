@@ -73,6 +73,25 @@ export class ResponseModule {
 
         const citations: Citation[] = [];
         queueAssistantResponse({
+          controller,
+          providers,
+          providerName: PROVIDER_NAME,
+          messages: mostRecentMessages,
+          model_name: MODEL_NAME,
+          systemPrompt,
+          citations,
+          error_message: DEFAULT_RESPONSE_MESSAGE,
+          temperature: RANDOM_RESPONSE_TEMPERATURE,
+        });
+      },
+    });
+
+    return new Response(stream, {
+      headers: {
+        "Content-Type": "text/event-stream",
+        "Cache-Control": "no-cache",
+        Connection: "keep-alive",
+      },
     });
   }
 
