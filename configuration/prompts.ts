@@ -84,3 +84,13 @@ export function HYDE_PROMPT(chat: Chat) {
     .join("\n")}
   `;
 }
+
+export function FITNESS_QUESTIONS() {
+  return [
+    "What are your current fitness goals?",
+    "How many times a week are you planning to work out?",
+    "What types of exercises do you enjoy?",
+    "Do you have any dietary preferences or restrictions?",
+    "Are you tracking your progress? If so, how?",
+  ];
+}
