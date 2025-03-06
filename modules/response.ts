@@ -44,12 +44,7 @@ import {
   RANDOM_RESPONSE_TEMPERATURE,
 } from "@/configuration/models";
 
-// Import FITNESS_QUESTIONS function
-import { FITNESS_QUESTIONS } from "@/configuration/prompts";
-
 export class ResponseModule {
-  // Existing functions...
-
   static async respondToRandomMessage(
     chat: Chat,
     providers: AIProviders
@@ -209,47 +204,6 @@ export class ResponseModule {
             temperature: QUESTION_RESPONSE_TEMPERATURE,
           });
         }
-      },
-    });
-
-    return new Response(stream, {
-      headers: {
-        "Content-Type": "text/event-stream",
-        "Cache-Control": "no-cache",
-        Connection: "keep-alive",
-      },
-    });
-  }
-
-  // Add the new function to prompt fitness questions
-  static async promptFitnessQuestions(
-    chat: Chat,
-    providers: AIProviders
-  ): Promise<Response> {
-    const PROVIDER_NAME: ProviderName = "openai";
-    const MODEL_NAME: string = "text-davinci-003";
-
-    const questions = FITNESS_QUESTIONS();
-    const question = questions[Math.floor(Math.random() * questions.length)];
-
-    const stream = new ReadableStream({
-      async start(controller) {
-        const systemPrompt = `You are a fitness assistant. Ask the user: "${question}"`;
-        const messages: CoreMessage[] = await convertToCoreMessages(
-          [{ role: "system", content: systemPrompt }]
-        );
-
-        queueAssistantResponse({
-          controller,
-          providers,
-          providerName: PROVIDER_NAME,
-          messages: messages,
-          model_name: MODEL_NAME,
-          systemPrompt,
-          citations: [],
-          error_message: "Sorry, I couldn't come up with a question.",
-          temperature: 0.7,
-        });
       },
     });
 
