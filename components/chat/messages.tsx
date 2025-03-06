@@ -9,7 +9,7 @@ import { AI_NAME } from "@/configuration/identity";
 function AILogo() {
   return (
     <div className="w-9 h-9">
-      <Image src="/fitness_chatbot_logo_transparent.png" alt={AI_NAME} width={36} height={36} />
+      <Image src="/fitness_chatbot_logo_transparent-removebg-preview.png" alt={AI_NAME} width={36} height={36} />
     </div>
   );
 }
