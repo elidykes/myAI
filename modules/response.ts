@@ -12,6 +12,7 @@ import {
   embedHypotheticalData,
   generateHypotheticalData,
   getSourcesFromChunks,
+  searchForChunksUsingEmbedding,
   getContextFromSources,
   getCitationsFromChunks,
   buildPromptFromContext,
@@ -44,11 +45,17 @@ import {
   RANDOM_RESPONSE_TEMPERATURE,
 } from "@/configuration/models";
 
+/**
+ * ResponseModule is responsible for collecting data and building a response
+ */
 export class ResponseModule {
   static async respondToRandomMessage(
     chat: Chat,
     providers: AIProviders
   ): Promise<Response> {
+    /**
+     * Respond to the user when they send a RANDOM message
+     */
     const PROVIDER_NAME: ProviderName = RANDOM_RESPONSE_PROVIDER;
     const MODEL_NAME: string = RANDOM_RESPONSE_MODEL;
 
@@ -66,25 +73,6 @@ export class ResponseModule {
 
         const citations: Citation[] = [];
         queueAssistantResponse({
-          controller,
-          providers,
-          providerName: PROVIDER_NAME,
-          messages: mostRecentMessages,
-          model_name: MODEL_NAME,
-          systemPrompt,
-          citations,
-          error_message: DEFAULT_RESPONSE_MESSAGE,
-          temperature: RANDOM_RESPONSE_TEMPERATURE,
-        });
-      },
-    });
-
-    return new Response(stream, {
-      headers: {
-        "Content-Type": "text/event-stream",
-        "Cache-Control": "no-cache",
-        Connection: "keep-alive",
-      },
     });
   }
 
@@ -92,6 +80,9 @@ export class ResponseModule {
     chat: Chat,
     providers: AIProviders
   ): Promise<Response> {
+    /**
+     * Respond to the user when they send a HOSTILE message
+     */
     const PROVIDER_NAME: ProviderName = HOSTILE_RESPONSE_PROVIDER;
     const MODEL_NAME: string = HOSTILE_RESPONSE_MODEL;
 
@@ -132,6 +123,9 @@ export class ResponseModule {
     providers: AIProviders,
     index: any
   ): Promise<Response> {
+    /**
+     * Respond to the user when they send a QUESTION
+     */
     const PROVIDER_NAME: ProviderName = QUESTION_RESPONSE_PROVIDER;
     const MODEL_NAME: string = QUESTION_RESPONSE_MODEL;
 
